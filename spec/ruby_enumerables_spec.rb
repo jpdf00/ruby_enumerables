@@ -104,4 +104,16 @@ describe Enumerable do
       expect([nil, true, 99].my_none?).to eql([nil, true, 99].none?)
     end
   end
+
+  describe '#my_count' do
+    it 'returns the number of items in the array if no argument and no block is passed.' do
+      expect([1, 2, 4, 2].my_count).to eql([1, 2, 4, 2].count)
+    end
+    it 'returns the number of items that pass the test if a block is passed, but no argument is passed.' do
+      expect([1, 2, 4, 2].my_count{ |x| x%2==0 }).to eql([1, 2, 4, 2].count{ |x| x%2==0 })
+    end
+    it 'returns the number of items equal to the argument if an argument is passed, but no block is passed.' do
+      expect([1, 2, 4, 2].my_count(2)).to eql([1, 2, 4, 2].count(2))
+    end
+  end
 end
