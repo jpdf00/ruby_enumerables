@@ -26,10 +26,11 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-    it 'Is equal to the #select method' do
+    it 'Is equal to the #select method when an array is given' do
       expect([1,2,3,4,5].my_select { |num|  num.even?  }).to eql([1,2,3,4,5].select { |num|  num.even?  })
+    end
+    it 'Is equal to the #select method when a range is given' do
       expect((1..10).my_select { |i|  i % 3 == 0 }).to eql((1..10).select { |i|  i % 3 == 0 })
-      expect([:foo, :bar].my_select { |x| x == :foo }).to eql([:foo, :bar].select { |x| x == :foo })
     end
     it "Returns Enumerable when no block given" do
       expect([1,2,3,4,5].my_select).to be_a Enumerator
@@ -39,22 +40,32 @@ describe Enumerable do
   describe '#my_all?' do
     it 'Returns true when all of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_all? { |word| word.length >= 3}).to eql(%w[ant bear cat].all? { |word| word.length >= 3 })
+    end
+    it 'Returns false when all of the items do not pass a test given in a block' do
       expect(%w[ant bear cat].my_all? { |word| word.length >= 4 }).to eql(%w[ant bear cat].all? { |word| word.length >= 4 })
     end
     it "Returns true if all of the items match a Regex" do
       expect(%w[ant bear cat].my_all?(/t/)).to eql(%w[ant bear cat].all?(/t/))
+    end
+    it 'Returns false if all of the items do not match a Regex' do
       expect(%w[ant bear cat].my_all?(/b/)).to eql(%w[ant bear cat].all?(/b/))
     end
     it "Returns true if all of the items are part of a class" do
       expect([1, 2i, 3.14].my_all?(Numeric)).to eql([1, 2i, 3.14].all?(Numeric))
+    end
+    it 'Returns false if all of the items are not part of a class' do
       expect([1, 2i, 3.14].my_all?(Float)).to eql([1, 2i, 3.14].all?(Float))
     end
     it "Returns true if all of the items match the argument" do
       expect(%w[cat cat cat].my_all?("cat")).to eql(%w[cat cat cat].all?("cat"))
+    end
+    it 'Returns true if all of the items do not match the argument' do
       expect(%w[ant bear cat].my_all?("cat")).to eql(%w[ant bear cat].all?("cat"))
     end
     it "Returns true if all of the values are truthy" do
       expect(["cat", true, 99].my_all?).to eql(["cat", true, 99].all?)
+    end
+    it 'Returns false if any of the values are falsy' do
       expect([nil, true, 99].my_all?).to eql([nil, true, 99].all?)
     end
   end
@@ -62,22 +73,32 @@ describe Enumerable do
   describe '#my_any?' do
     it 'Returns true when any of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_any? { |word| word.length >= 3}).to eql(%w[ant bear cat].any? { |word| word.length >= 3 })
+    end
+    it 'Returns false when any of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_any? { |word| word.length >= 4 }).to eql(%w[ant bear cat].any? { |word| word.length >= 4 })
     end
     it "Returns true if any of the items match a Regex" do
       expect(%w[ant bear cat].my_any?(/t/)).to eql(%w[ant bear cat].any?(/t/))
+    end
+    it 'Returns false if any of the items match a Regex' do
       expect(%w[ant bear cat].my_any?(/b/)).to eql(%w[ant bear cat].any?(/b/))
     end
     it "Returns true if any of the items are part of a class" do
       expect([1, 2i, 3.14].my_any?(Numeric)).to eql([1, 2i, 3.14].any?(Numeric))
+    end
+    it 'Returns false if any of the items are part of a class' do
       expect([1, 2i, 3.14].my_any?(Float)).to eql([1, 2i, 3.14].any?(Float))
     end
     it "Returns true if any of the items match the argument" do
       expect(%w[cat cat cat].my_any?("cat")).to eql(%w[cat cat cat].any?("cat"))
+    end
+    it 'Returns false if any of the items match the argument' do
       expect(%w[ant bear cat].my_any?("cat")).to eql(%w[ant bear cat].any?("cat"))
     end
     it "Returns true if any of the values are truthy" do
       expect(["cat", true, 99].my_any?).to eql(["cat", true, 99].any?)
+    end
+    it 'Returns false if any of the values are truthy' do
       expect([nil, true, 99].my_any?).to eql([nil, true, 99].any?)
     end
   end
