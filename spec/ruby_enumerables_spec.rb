@@ -8,9 +8,9 @@ describe Enumerable do
     it "Doesn't change the original array" do
       expect([1,2,3,4,5].my_each { |a| a }).to eql([1,2,3,4,5])
     end
-    #it "Returns Enumerable when no block given" do
-      #expect(integer_array.my_each).to eql(integer_array.to_enum)
-    #end
+    it "Returns Enumerable when no block given" do
+      expect([1,2,3,4,5].my_each).to be_a Enumerator
+    end
   end
 
   describe '#my_each_with_index' do
@@ -20,9 +20,9 @@ describe Enumerable do
     it "Doesn't change the original array" do
       expect([1,2,3,4,5].my_each_with_index { |a, i| a + i }).to eql([1,2,3,4,5])
     end
-    #it "Returns Enumerable when no block given" do
-      #expect(integer_array.my_each_with_index).to eql(integer_array.to_enum)
-    #end
+    it "Returns Enumerable when no block given" do
+      expect([1,2,3,4,5].my_each_with_index).to be_a Enumerator
+    end
   end
 
   describe '#my_select' do
@@ -31,9 +31,9 @@ describe Enumerable do
       expect((1..10).my_select { |i|  i % 3 == 0 }).to eql((1..10).select { |i|  i % 3 == 0 })
       expect([:foo, :bar].my_select { |x| x == :foo }).to eql([:foo, :bar].select { |x| x == :foo })
     end
-    #it "Returns Enumerable when no block given" do
-      #expect(integer_array.my_each_with_index).to eql(integer_array.to_enum)
-    #end
+    it "Returns Enumerable when no block given" do
+      expect([1,2,3,4,5].my_select).to be_a Enumerator
+    end
   end
 
   describe '#my_all?' do
