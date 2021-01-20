@@ -98,7 +98,7 @@ describe Enumerable do
     it "Returns true if any of the values are truthy" do
       expect(["cat", true, 99].my_any?).to eql(["cat", true, 99].any?)
     end
-    it 'Returns false if any of the values are truthy' do
+    it 'Returns false if any of the values are falsy' do
       expect([nil, true, 99].my_any?).to eql([nil, true, 99].any?)
     end
   end
@@ -106,22 +106,32 @@ describe Enumerable do
   describe '#my_none?' do
     it 'Returns true when none of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_none? { |word| word.length >= 3}).to eql(%w[ant bear cat].none? { |word| word.length >= 3 })
+    end
+    it 'Returns false when none of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_none? { |word| word.length >= 4 }).to eql(%w[ant bear cat].none? { |word| word.length >= 4 })
     end
     it "Returns true if none of the items match a Regex" do
       expect(%w[ant bear cat].my_none?(/t/)).to eql(%w[ant bear cat].none?(/t/))
+    end
+    it 'Returns false if none of the items match a Regex' do
       expect(%w[ant bear cat].my_none?(/b/)).to eql(%w[ant bear cat].none?(/b/))
     end
     it "Returns true if none of the items are part of a class" do
       expect([1, 2i, 3.14].my_none?(Numeric)).to eql([1, 2i, 3.14].none?(Numeric))
+    end
+    it 'Returns false if none of the items are part of a class' do
       expect([1, 2i, 3.14].my_none?(Float)).to eql([1, 2i, 3.14].none?(Float))
     end
     it "Returns true if none of the items match the argument" do
       expect(%w[cat cat cat].my_none?("cat")).to eql(%w[cat cat cat].none?("cat"))
+    end
+    it 'Returns false if none of the items match the argument' do
       expect(%w[ant bear cat].my_none?("cat")).to eql(%w[ant bear cat].none?("cat"))
     end
     it "Returns true if none of the values are truthy" do
       expect(["cat", true, 99].my_none?).to eql(["cat", true, 99].none?)
+    end
+    it 'Returns false if none of the values are falsy' do
       expect([nil, true, 99].my_none?).to eql([nil, true, 99].none?)
     end
   end
