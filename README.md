@@ -31,6 +31,13 @@ Clone the repository from Github: [Ruby Enumerables](https://github.com/aliciapa
 - Type `ruby ruby_enumerables.rb`
 - Add the methods to your personal library of methods and try it with any array of your choice
 
+### Run tests
+
+- Open your terminal.
+- From Inside the terminal, go to the "ruby_enumerables" directory you cloned.
+- Type `rspec`.
+
+## Authors
 
 ## Authors
 
