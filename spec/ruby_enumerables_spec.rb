@@ -116,4 +116,13 @@ describe Enumerable do
       expect([1, 2, 4, 2].my_count(2)).to eql([1, 2, 4, 2].count(2))
     end
   end
+
+  describe '#my_map' do
+    it 'returns an Enumerator when no block nor proc are given' do
+      expect([1, 2, 4, 2].my_map).to be_a Enumerator
+    end
+    it 'returns an array when a block is given' do
+      expect((1..4).my_map { |i| i*i }).to eql((1..4).map { |i| i*i })
+    end
+  end
 end
