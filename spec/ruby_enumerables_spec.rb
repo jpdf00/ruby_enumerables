@@ -125,4 +125,19 @@ describe Enumerable do
       expect((1..4).my_map { |i| i*i }).to eql((1..4).map { |i| i*i })
     end
   end
+
+  describe '#my_inject' do 
+    it 'returns a single value based on the the application of a block' do
+      expect((5..10).my_inject { |sum, n| sum + n } ).to eql((5..10).my_inject { |sum, n| sum + n } )
+    end
+    it 'returns a value when an initial value and a block is specified' do
+      expect((5..10).my_inject(1) { |product, n| product * n }).to eql((5..10).inject(1) { |product, n| product * n })
+    end
+    it 'returns a value when a symbol and an initial value is specified' do
+      expect((5..10).my_inject(1, :*)).to eql((5..10).my_inject(1, :*))
+    end
+    it 'returns a value when only a symbol is given' do
+      expect((5..10).my_inject(:+)).to eql((5..10).inject(:+))
+    end
+  end
 end
