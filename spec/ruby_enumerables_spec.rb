@@ -1,4 +1,4 @@
-require './ruby_enumerables'
+require_relative '../ruby_enumerables'
 
 describe Enumerable do
   describe '#my_each' do
@@ -38,28 +38,28 @@ describe Enumerable do
   end
 
   describe '#my_all?' do
-    it 'Returns true when all of the items pass a test given in a block' do
+    it 'Returns true if all of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_all? { |word| word.length >= 3}).to eql(%w[ant bear cat].all? { |word| word.length >= 3 })
     end
-    it 'Returns false when all of the items do not pass a test given in a block' do
+    it 'Returns false if any of the items do not pass a test given in a block' do
       expect(%w[ant bear cat].my_all? { |word| word.length >= 4 }).to eql(%w[ant bear cat].all? { |word| word.length >= 4 })
     end
     it "Returns true if all of the items match a Regex" do
-      expect(%w[ant bear cat].my_all?(/t/)).to eql(%w[ant bear cat].all?(/t/))
+      expect(%w[ant bat cat].my_all?(/t/)).to eql(%w[ant bat cat].all?(/t/))
     end
-    it 'Returns false if all of the items do not match a Regex' do
+    it 'Returns false if any of the items do not match a Regex' do
       expect(%w[ant bear cat].my_all?(/b/)).to eql(%w[ant bear cat].all?(/b/))
     end
     it "Returns true if all of the items are part of a class" do
       expect([1, 2i, 3.14].my_all?(Numeric)).to eql([1, 2i, 3.14].all?(Numeric))
     end
-    it 'Returns false if all of the items are not part of a class' do
+    it 'Returns false if any of the items are not part of a class' do
       expect([1, 2i, 3.14].my_all?(Float)).to eql([1, 2i, 3.14].all?(Float))
     end
     it "Returns true if all of the items match the argument" do
       expect(%w[cat cat cat].my_all?("cat")).to eql(%w[cat cat cat].all?("cat"))
     end
-    it 'Returns true if all of the items do not match the argument' do
+    it 'Returns false if any of the items do not match the argument' do
       expect(%w[ant bear cat].my_all?("cat")).to eql(%w[ant bear cat].all?("cat"))
     end
     it "Returns true if all of the values are truthy" do
@@ -71,68 +71,68 @@ describe Enumerable do
   end
 
   describe '#my_any?' do
-    it 'Returns true when any of the items pass a test given in a block' do
+    it 'Returns true if any of the items pass a test given in a block' do
       expect(%w[ant bear cat].my_any? { |word| word.length >= 3}).to eql(%w[ant bear cat].any? { |word| word.length >= 3 })
     end
-    it 'Returns false when any of the items pass a test given in a block' do
-      expect(%w[ant bear cat].my_any? { |word| word.length >= 4 }).to eql(%w[ant bear cat].any? { |word| word.length >= 4 })
+    it 'Returns false if none of the items pass a test given in a block' do
+      expect(%w[ant bat cat].my_any? { |word| word.length >= 4 }).to eql(%w[ant bat cat].any? { |word| word.length >= 4 })
     end
     it "Returns true if any of the items match a Regex" do
       expect(%w[ant bear cat].my_any?(/t/)).to eql(%w[ant bear cat].any?(/t/))
     end
-    it 'Returns false if any of the items match a Regex' do
-      expect(%w[ant bear cat].my_any?(/b/)).to eql(%w[ant bear cat].any?(/b/))
+    it 'Returns false if none of the items match a Regex' do
+      expect(%w[ant bear cat].my_any?(/d/)).to eql(%w[ant bear cat].any?(/d/))
     end
     it "Returns true if any of the items are part of a class" do
-      expect([1, 2i, 3.14].my_any?(Numeric)).to eql([1, 2i, 3.14].any?(Numeric))
-    end
-    it 'Returns false if any of the items are part of a class' do
       expect([1, 2i, 3.14].my_any?(Float)).to eql([1, 2i, 3.14].any?(Float))
     end
-    it "Returns true if any of the items match the argument" do
-      expect(%w[cat cat cat].my_any?("cat")).to eql(%w[cat cat cat].any?("cat"))
+    it 'Returns false if none of the items are part of a class' do
+      expect([1, 2i, 3.14].my_any?(String)).to eql([1, 2i, 3.14].any?(String))
     end
-    it 'Returns false if any of the items match the argument' do
+    it "Returns true if any of the items match the argument" do
       expect(%w[ant bear cat].my_any?("cat")).to eql(%w[ant bear cat].any?("cat"))
     end
-    it "Returns true if any of the values are truthy" do
-      expect(["cat", true, 99].my_any?).to eql(["cat", true, 99].any?)
+    it 'Returns false if none of the items match the argument' do
+      expect(%w[ant bear bat].my_any?("cat")).to eql(%w[ant bear bat].any?("cat"))
     end
-    it 'Returns false if any of the values are falsy' do
+    it "Returns true if any of the values are truthy" do
       expect([nil, true, 99].my_any?).to eql([nil, true, 99].any?)
+    end
+    it 'Returns false if none of the values are truthy' do
+      expect([nil, false, nil].my_any?).to eql([nil, false, nil].any?)
     end
   end
 
   describe '#my_none?' do
-    it 'Returns true when none of the items pass a test given in a block' do
-      expect(%w[ant bear cat].my_none? { |word| word.length >= 3}).to eql(%w[ant bear cat].none? { |word| word.length >= 3 })
+    it 'Returns true if none of the items pass a test given in a block' do
+      expect(%w[ant bat cat].my_none? { |word| word.length >= 4}).to eql(%w[ant bat cat].none? { |word| word.length >= 4 })
     end
-    it 'Returns false when none of the items pass a test given in a block' do
-      expect(%w[ant bear cat].my_none? { |word| word.length >= 4 }).to eql(%w[ant bear cat].none? { |word| word.length >= 4 })
+    it 'Returns false if any of the items pass a test given in a block' do
+      expect(%w[ant bear cat].my_none? { |word| word.length >= 3 }).to eql(%w[ant bear cat].none? { |word| word.length >= 3 })
     end
     it "Returns true if none of the items match a Regex" do
-      expect(%w[ant bear cat].my_none?(/t/)).to eql(%w[ant bear cat].none?(/t/))
+      expect(%w[ant bear cat].my_none?(/d/)).to eql(%w[ant bear cat].none?(/d/))
     end
-    it 'Returns false if none of the items match a Regex' do
+    it 'Returns false if any of the items match a Regex' do
       expect(%w[ant bear cat].my_none?(/b/)).to eql(%w[ant bear cat].none?(/b/))
     end
     it "Returns true if none of the items are part of a class" do
-      expect([1, 2i, 3.14].my_none?(Numeric)).to eql([1, 2i, 3.14].none?(Numeric))
+      expect([1, 2i, 3].my_none?(Float)).to eql([1, 2i, 3].none?(Float))
     end
-    it 'Returns false if none of the items are part of a class' do
+    it 'Returns false if any of the items are part of a class' do
       expect([1, 2i, 3.14].my_none?(Float)).to eql([1, 2i, 3.14].none?(Float))
     end
     it "Returns true if none of the items match the argument" do
-      expect(%w[cat cat cat].my_none?("cat")).to eql(%w[cat cat cat].none?("cat"))
+      expect(%w[ant bear bat].my_none?("cat")).to eql(%w[ant bear bat].none?("cat"))
     end
-    it 'Returns false if none of the items match the argument' do
+    it 'Returns false if any of the items match the argument' do
       expect(%w[ant bear cat].my_none?("cat")).to eql(%w[ant bear cat].none?("cat"))
     end
     it "Returns true if none of the values are truthy" do
-      expect(["cat", true, 99].my_none?).to eql(["cat", true, 99].none?)
+      expect([nil, false, nil].my_none?).to eql([nil, false, nil].none?)
     end
-    it 'Returns false if none of the values are falsy' do
-      expect([nil, true, 99].my_none?).to eql([nil, true, 99].none?)
+    it 'Returns false if any of the values are truthy' do
+      expect([nil, false, 99].my_none?).to eql([nil, false, 99].none?)
     end
   end
 
@@ -157,7 +157,7 @@ describe Enumerable do
     end
   end
 
-  describe '#my_inject' do 
+  describe '#my_inject' do
     it 'returns a single value based on the the application of a block' do
       expect((5..10).my_inject { |sum, n| sum + n } ).to eql((5..10).my_inject { |sum, n| sum + n } )
     end
