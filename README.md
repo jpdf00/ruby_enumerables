@@ -33,8 +33,7 @@ Clone the repository from Github: [Ruby Enumerables](https://github.com/aliciapa
 
 ### Run tests
 
-- Open your terminal.
-- From Inside the terminal, go to the "ruby_enumerables" directory you cloned.
+- Open your terminal and `cd` to the directory you cloned.
 - Type `rspec`.
 
 ## Authors
