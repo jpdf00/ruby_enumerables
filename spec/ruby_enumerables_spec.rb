@@ -1,7 +1,7 @@
 require_relative '../ruby_enumerables'
 
 describe Enumerable do
-  let(:integer_array) {[1, 2, 3, 4, 5]}
+  let(:integer_array) { [1, 2, 3, 4, 5] }
 
   describe '#my_each' do
     it 'Is equal to the #each method' do
@@ -16,12 +16,12 @@ describe Enumerable do
   end
 
   describe '#my_each_with_index' do
-    let(:integer_array) {[1, 2, 3, 4, 5]}
+    let(:integer_array) { [1, 2, 3, 4, 5] }
 
     it 'Is equal to the #each_with_index method' do
       expect(integer_array.my_each_with_index { |a, i| a + i }).to eql(integer_array.each_with_index do |a, i|
-                                                                           a + i
-                                                                         end)
+                                                                         a + i
+                                                                       end)
     end
     it "Doesn't change the original array" do
       expect(integer_array.my_each_with_index { |a, i| a + i }).to eql(integer_array)
@@ -32,8 +32,8 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-    let(:integer_array) {[1, 2, 3, 4, 5]}
-    let(:range) {(1..10)}
+    let(:integer_array) { [1, 2, 3, 4, 5] }
+    let(:range) { (1..10) }
 
     it 'Is equal to the #select method when an array is given' do
       expect(integer_array.my_select(&:even?)).to eql(integer_array.select(&:even?))
@@ -158,7 +158,7 @@ describe Enumerable do
   end
 
   describe '#my_count' do
-    let(:integer_array2) {[1, 2, 4, 2]}
+    let(:integer_array2) { [1, 2, 4, 2] }
 
     it 'returns the number of items in the array if no argument and no block is passed.' do
       expect(integer_array2.my_count).to eql(integer_array2.count)
@@ -172,9 +172,9 @@ describe Enumerable do
   end
 
   describe '#my_map' do
-    let(:integer_array2) {[1, 2, 4, 2]}
-    let(:range2) {(1..4)}
-    
+    let(:integer_array2) { [1, 2, 4, 2] }
+    let(:range2) { (1..4) }
+
     it 'returns an Enumerator when no block nor proc are given' do
       expect(integer_array2.my_map).to be_a Enumerator
     end
@@ -184,7 +184,7 @@ describe Enumerable do
   end
 
   describe '#my_inject' do
-    let(:range3) {(5..10)}
+    let(:range3) { (5..10) }
 
     it 'returns a single value based on the the application of a block' do
       expect(range3.my_inject { |sum, n| sum + n }).to eql(range3.my_inject { |sum, n| sum + n })
