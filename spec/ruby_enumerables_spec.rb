@@ -1,41 +1,48 @@
 require_relative '../ruby_enumerables'
 
 describe Enumerable do
+  let(:integer_array) {[1, 2, 3, 4, 5]}
+
   describe '#my_each' do
     it 'Is equal to the #each method' do
-      expect([1, 2, 3, 4, 5].my_each { |a| }).to eql([1, 2, 3, 4, 5].each { |a| })
+      expect(integer_array.my_each { |a| }).to eql(integer_array.each { |a| })
     end
     it "Doesn't change the original array" do
-      expect([1, 2, 3, 4, 5].my_each { |a| }).to eql([1, 2, 3, 4, 5])
+      expect(integer_array.my_each { |a| }).to eql(integer_array)
     end
     it 'Returns Enumerable when no block given' do
-      expect([1, 2, 3, 4, 5].my_each).to be_a Enumerator
+      expect(integer_array.my_each).to be_a Enumerator
     end
   end
 
   describe '#my_each_with_index' do
+    let(:integer_array) {[1, 2, 3, 4, 5]}
+
     it 'Is equal to the #each_with_index method' do
-      expect([1, 2, 3, 4, 5].my_each_with_index { |a, i| a + i }).to eql([1, 2, 3, 4, 5].each_with_index do |a, i|
+      expect(integer_array.my_each_with_index { |a, i| a + i }).to eql(integer_array.each_with_index do |a, i|
                                                                            a + i
                                                                          end)
     end
     it "Doesn't change the original array" do
-      expect([1, 2, 3, 4, 5].my_each_with_index { |a, i| a + i }).to eql([1, 2, 3, 4, 5])
+      expect(integer_array.my_each_with_index { |a, i| a + i }).to eql(integer_array)
     end
     it 'Returns Enumerable when no block given' do
-      expect([1, 2, 3, 4, 5].my_each_with_index).to be_a Enumerator
+      expect(integer_array.my_each_with_index).to be_a Enumerator
     end
   end
 
   describe '#my_select' do
+    let(:integer_array) {[1, 2, 3, 4, 5]}
+    let(:range) {(1..10)}
+
     it 'Is equal to the #select method when an array is given' do
-      expect([1, 2, 3, 4, 5].my_select(&:even?)).to eql([1, 2, 3, 4, 5].select(&:even?))
+      expect(integer_array.my_select(&:even?)).to eql(integer_array.select(&:even?))
     end
     it 'Is equal to the #select method when a range is given' do
-      expect((1..10).my_select { |i| (i % 3).zero? }).to eql((1..10).select { |i| (i % 3).zero? })
+      expect(range.my_select { |i| (i % 3).zero? }).to eql(range.select { |i| (i % 3).zero? })
     end
     it 'Returns Enumerable when no block given' do
-      expect([1, 2, 3, 4, 5].my_select).to be_a Enumerator
+      expect(integer_array.my_select).to be_a Enumerator
     end
   end
 
@@ -151,38 +158,45 @@ describe Enumerable do
   end
 
   describe '#my_count' do
+    let(:integer_array2) {[1, 2, 4, 2]}
+
     it 'returns the number of items in the array if no argument and no block is passed.' do
-      expect([1, 2, 4, 2].my_count).to eql([1, 2, 4, 2].count)
+      expect(integer_array2.my_count).to eql(integer_array2.count)
     end
     it 'returns the number of items that pass the test if a block is passed, but no argument is passed.' do
-      expect([1, 2, 4, 2].my_count(&:even?)).to eql([1, 2, 4, 2].count(&:even?))
+      expect(integer_array2.my_count(&:even?)).to eql(integer_array2.count(&:even?))
     end
     it 'returns the number of items equal to the argument if an argument is passed, but no block is passed.' do
-      expect([1, 2, 4, 2].my_count(2)).to eql([1, 2, 4, 2].count(2))
+      expect(integer_array2.my_count(2)).to eql(integer_array2.count(2))
     end
   end
 
   describe '#my_map' do
+    let(:integer_array2) {[1, 2, 4, 2]}
+    let(:range2) {(1..4)}
+    
     it 'returns an Enumerator when no block nor proc are given' do
-      expect([1, 2, 4, 2].my_map).to be_a Enumerator
+      expect(integer_array2.my_map).to be_a Enumerator
     end
     it 'returns an array when a block is given' do
-      expect((1..4).my_map { |i| i * i }).to eql((1..4).map { |i| i * i })
+      expect(range2.my_map { |i| i * i }).to eql(range2.map { |i| i * i })
     end
   end
 
   describe '#my_inject' do
+    let(:range3) {(5..10)}
+
     it 'returns a single value based on the the application of a block' do
-      expect((5..10).my_inject { |sum, n| sum + n }).to eql((5..10).my_inject { |sum, n| sum + n })
+      expect(range3.my_inject { |sum, n| sum + n }).to eql(range3.my_inject { |sum, n| sum + n })
     end
     it 'returns a value when an initial value and a block is specified' do
-      expect((5..10).my_inject(1) { |product, n| product * n }).to eql((5..10).inject(1) { |product, n| product * n })
+      expect(range3.my_inject(1) { |product, n| product * n }).to eql(range3.inject(1) { |product, n| product * n })
     end
     it 'returns a value when a symbol and an initial value is specified' do
-      expect((5..10).my_inject(1, :*)).to eql((5..10).my_inject(1, :*))
+      expect(range3.my_inject(1, :*)).to eql(range3.my_inject(1, :*))
     end
     it 'returns a value when only a symbol is given' do
-      expect((5..10).my_inject(:+)).to eql((5..10).inject(:+))
+      expect(range3.my_inject(:+)).to eql(range3.inject(:+))
     end
   end
 end
